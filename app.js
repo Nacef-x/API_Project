@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 
 const sensorRoutes = require("./api/routes/sensors");
 const eventsRoutes = require("./api/routes/events");
+const userRoutes = require("./api/routes/user");
 
 mongoose.connect(
   "mongodb+srv://nacef:" +
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
 });
 app.use("/sensors", sensorRoutes);
 app.use("/events", eventsRoutes);
+app.use("/user", userRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
