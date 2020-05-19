@@ -8,6 +8,7 @@ const sensorRoutes = require("./api/routes/sensors");
 const eventsRoutes = require("./api/routes/events");
 const userRoutes = require("./api/routes/user");
 
+mongoose.set("useCreateIndex", true);
 mongoose.connect(
   "mongodb+srv://nacef:" +
     process.env.MONGO_ATLAS_PW +
