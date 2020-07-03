@@ -9,6 +9,8 @@ module.exports = (req, res, next) => {
     req.userData = decoded;
     next();
   } catch (error) {
+    console.log("error", error);
+
     return res.status(401).json({
       message: "Auth failed",
     });

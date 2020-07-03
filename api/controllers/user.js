@@ -47,6 +47,11 @@ exports.user_login = (req, res, next) => {
   User.findOne({ email: req.body.email })
     .exec()
     .then((user) => {
+      if (!user) {
+        return res.status(401).json({
+          message: "No user",
+        });
+      }
       if (user.length < 1) {
         return res.status(401).json({
           message: "Auth failed",
@@ -55,10 +60,16 @@ exports.user_login = (req, res, next) => {
       bcrypt.compare(req.body.password, user.password, (error, result) => {
         if (error) {
           return res.status(401).json({
-            message: "Auth failed",
+            message: "Auth Failed",
           });
         }
-        if (result) {
+        if (!result) {
+          return res.status(401).json({
+            message: "Password incorrect!",
+          });
+        } else {
+          // Pass is correct
+          // Getting token
           token = jwt.sign(
             {
               email: user.email,
@@ -74,9 +85,6 @@ exports.user_login = (req, res, next) => {
             token: token,
           });
         }
-        res.status(401).json({
-          message: "Auth failedd",
-        });
       });
     })
     .catch((error) => {

@@ -15,6 +15,7 @@ exports.events_get_all = (req, res, next) => {
             _id: doc._id,
             sensor: doc.sensor,
             mesure: doc.mesure,
+            time: doc.time,
             request: {
               type: "GET",
               url: "/events/" + doc._id,
@@ -31,6 +32,8 @@ exports.events_get_all = (req, res, next) => {
 };
 
 exports.events_post_event = (req, res, next) => {
+  console.log("req.body", req.body);
+
   Sensor.findById(req.body.sensorId)
     .then((sensor) => {
       if (!sensor) {
@@ -42,6 +45,7 @@ exports.events_post_event = (req, res, next) => {
         _id: mongoose.Types.ObjectId(),
         mesure: req.body.mesure,
         sensor: req.body.sensorId,
+        time: req.body.time,
       });
       return event.save();
     })
@@ -53,6 +57,7 @@ exports.events_post_event = (req, res, next) => {
           _id: result._id,
           sensor: result.sensor,
           mesure: result.mesure,
+          time: result.time,
         },
         request: {
           type: "GET",

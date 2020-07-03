@@ -8,5 +8,7 @@ const eventSchema = mongoose.Schema({
     required: true,
   },
   mesure: { type: Number, required: true },
+  //TODO: add time
+  time: { type: Date, required: true },
 });
 module.exports = mongoose.model("Event", eventSchema);
